@@ -9,6 +9,7 @@
   "max_restarts"     : 5,
   "merge_logs"       : true,
   "env": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "PORT": 8100
   }
 }
