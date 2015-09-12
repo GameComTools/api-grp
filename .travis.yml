@@ -3,4 +3,5 @@ node_js:
   - "0.12"
 services:
   - mongodb
-script: bash scripts/deploy.sh
+after_success:
+  - apt-get install sshpass
