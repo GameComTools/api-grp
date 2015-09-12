@@ -1,0 +1,13 @@
+{
+  "name"             : "api-grp",
+  "cwd"              : "/srv/api-grp",
+  "script"           : "npm start",
+  "error_file"       : "log/pm2.error.log",
+  "out_file"         : "log/pm2.out.log",
+  "pid_file"         : "pids/pm2.pid",
+  "max_restarts"     : 5,
+  "merge_logs"       : true,
+  "env": {
+    "NODE_ENV": "production"
+  }
+}

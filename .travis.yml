@@ -10,4 +10,4 @@ addons:
     - sshpass
 after_success:
   - sshpass -e scp -o StrictHostKeyChecking=no -r ./ root@45.55.208.46:/srv/api-grp
-  - sshpass -e ssh root@45.55.208.46  -o StrictHostKeyChecking=no "echo 'hello'"
+  - sshpass -e ssh root@45.55.208.46  -o StrictHostKeyChecking=no "pm2 startOrRestart /srv/api-grp/scripts/pm2.json"
