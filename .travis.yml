@@ -5,4 +5,5 @@ services:
   - mongodb
 after_success:
   - sudo apt-get install sshpass
+  - sshpass -e -o StrictHostKeyChecking=no scp ./ root@45.55.208.46:/srv/api-grp
   - sshpass -e ssh root@45.55.208.46  -o StrictHostKeyChecking=no "echo 'hello'"
