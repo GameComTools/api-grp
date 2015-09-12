@@ -3,9 +3,9 @@
   "cwd"              : "/srv/api-grp",
   "script"           : "node_modules/actionhero/bin/actionhero",
   "args"             : ["start"],
-  "error_file"       : "log/pm2.error.log",
-  "out_file"         : "log/pm2.out.log",
-  "pid_file"         : "pids/pm2.pid",
+  "error_file"       : "/srv/api-grplog/pm2.error.log",
+  "out_file"         : "/srv/api-grplog/pm2.out.log",
+  "pid_file"         : "/srv/api-grppids/pm2.pid",
   "max_restarts"     : 5,
   "merge_logs"       : true,
   "env": {
