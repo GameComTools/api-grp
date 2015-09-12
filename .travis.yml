@@ -3,8 +3,4 @@ node_js:
   - "0.12"
 services:
   - mongodb
-deploy:
-  provider: script
-  script: bash scripts/deploy.sh
-  on:
-    branch: master
+script: bash scripts/deploy.sh
