@@ -3,7 +3,7 @@ describe('Task: warList', function() {
     before(function() {
         global.resetMongo = false;
         global.lastParent = this.test.parent.title;
-        global.mockDatabase.groupmeCommands.command = 'warList';
+        global.mockDatabase.groupmeCommands.command = 'warlist';
     });
 
     it('should respond when no war is occurring', function (done) {
@@ -12,7 +12,7 @@ describe('Task: warList', function() {
             done();
         };
 
-        api.specHelper.runTask('command/warList', {
+        api.specHelper.runTask('command/warlist', {
             communityId: "55f2009570dae75f9df5f5cc",
             group_id: "13800367",
             user_id: 12345,
@@ -50,7 +50,7 @@ describe('Task: warList', function() {
             done();
         };
 
-        api.specHelper.runTask('command/warList', {
+        api.specHelper.runTask('command/warlist', {
             communityId: "55f2009570dae75f9df5f5cc",
             group_id: "13800367",
             user_id: 12345,
@@ -81,7 +81,7 @@ describe('Task: warList', function() {
             done();
         };
 
-        api.specHelper.runTask('command/warList', {
+        api.specHelper.runTask('command/warlist', {
             communityId: "55f2009570dae75f9df5f5cc",
             group_id: "13800367",
             user_id: 12345,
