@@ -14,6 +14,9 @@ exports.callback =  {
         user_id: {
             required: true
         },
+        name: {
+            required: false
+        },
         text: {
             required: true
         }
