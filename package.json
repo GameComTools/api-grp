@@ -9,6 +9,7 @@
   "dependencies": {
     "actionhero": "11.6.0",
     "bluebird": "^2.10.0",
+    "deepmerge": "^0.2.10",
     "giphy": "0.0.4",
     "grunt": "latest",
     "mongodb": "^2.0.42",
@@ -35,7 +36,10 @@
         "actions/",
         "tasks/"
       ],
-      "data-cover-never": [ "node_modules", "test" ]
+      "data-cover-never": [
+        "node_modules",
+        "test"
+      ]
     }
   }
 }
