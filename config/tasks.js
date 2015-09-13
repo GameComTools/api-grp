@@ -15,7 +15,7 @@ exports.default = {
       // at maximum, how many parallel taskProcessors should this node spawn?
       maxTaskProcessors: 10,
       // how often should we check the event loop to spawn more taskProcessors?
-      checkTimeout: 1300,
+      checkTimeout: 500,
       // how many ms would constitue an event loop delay to halt taskProcessors spawning?
       maxEventLoopDelay: 5,
       // When we kill off a taskProcessor, should we disonnect that local redis connection?

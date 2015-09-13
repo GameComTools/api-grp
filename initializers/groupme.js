@@ -63,14 +63,20 @@ module.exports = {
                         });
                     }
                 };
-                request(options, function (error, response, body) {
-                    if (all) {
-                        data.page = 1;
-                        getNextPage(body, resolve, []);
-                    } else {
-                        resolve(body);
-                    }
-                });
+                var timeout = 0;
+                if (options.uri.indexOf('messages') > -1) {
+                    timeout = 1200;
+                }
+                setTimeout(function() {
+                    request(options, function (error, response, body) {
+                        if (all) {
+                            data.page = 1;
+                            getNextPage(body, resolve, []);
+                        } else {
+                            resolve(body);
+                        }
+                    });
+                }, timeout);
             });
         };
         next();
