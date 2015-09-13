@@ -7,7 +7,8 @@ exports.commandGiphy = {
     run: function(api, params, next) {
         var giphy = require('giphy')(api.config.giphy.apiKey);
         giphy.random({
-            tag: params.args[0]
+            tag: params.args[0],
+            rating: 'pg-13'
         }, function(err, img) {
             if (err === null) {
                 api.groupme('groups/' + params.group_id + '/messages', 'POST', {
