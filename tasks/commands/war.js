@@ -15,7 +15,7 @@ exports.commandWar = {
                     }
                 });
                 api.database.updateOne('groupmeGroups', {groupId: params.group_id}, {
-                    '$set': {
+                    $set: {
                         warData: {
                             opponent: '',
                             calloutMax: 0,
@@ -32,7 +32,7 @@ exports.commandWar = {
                     }
                 });
                 api.database.updateOne('groupmeGroups', {groupId: params.group_id}, {
-                    '$set': {
+                    $set: {
                         warData: {
                             opponent: params.args.join(' ')
                         }
@@ -46,7 +46,7 @@ exports.commandWar = {
                         }
                     });
                     api.database.updateOne('groupmeGroups', {groupId: params.group_id}, {
-                        '$set': {
+                        $set: {
                             warData: {
                                 calloutMax: parseInt(params.args[0]),
                                 warExpires: Date.now() + ((60000 * 60) * 48),
@@ -64,7 +64,7 @@ exports.commandWar = {
             } else {
                 api.groupme('groups/' + params.group_id + '/messages', 'POST', {
                     "message": {
-                        "text": 'A war has alreay been started. To see the callouts use !warList'
+                        "text": 'A war has already been started. To see the callouts use !warList'
                     }
                 });
             }

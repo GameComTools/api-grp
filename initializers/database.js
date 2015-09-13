@@ -29,7 +29,9 @@ module.exports = {
                 }
                 api.database.db
                     .collection(collection)
-                    .updateOne(query, update, function(err, docs) {
+                    .updateOne(query, update, {
+                        upsert: true
+                    }, function(err, docs) {
                         if (err) {
                             return reject(err);
                         }
