@@ -45,8 +45,7 @@ beforeEach(function(done) {
             groupmeCommands: [
                 {
                     "_id": "55f33ca470dae75f9df5f5ce",
-                    "command": "ping",
-                    "cooldown": 0
+                    "command": "ping"
                 }
             ]
         };

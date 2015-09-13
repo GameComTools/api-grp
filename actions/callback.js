@@ -57,7 +57,10 @@ exports.callback =  {
                                             data.params.args = data.params.text.split(' ');
                                             data.params.args.shift();
                                             var updates = {cooldowns: {}};
-                                            var cooldown = groupmeCommand[0].cooldown || 15;
+                                            var cooldown = groupmeCommand[0].cooldown;
+                                            if (cooldown === undefined) {
+                                                cooldown = 15;
+                                            }
                                             if (groupmeGroup[0].customCooldowns && groupmeGroup[0].customCooldowns[groupmeCommand[0]._id]) {
                                                 cooldown = groupmeGroup[0].customCooldowns[groupmeCommand[0]._id];
                                             }
