@@ -78,7 +78,7 @@ describe('Action: callback', function() {
         });
     });
 
-    it('ItShould error with notRegistered for invalid communityId', function(done) {
+    it('should error with notRegistered for invalid communityId', function(done) {
         api.tasks.enqueue = function(task, params, queue, callback) {
             ItShould(task).equal("command/error");
             ItShould(params.errType).equal("notRegistered");
@@ -95,7 +95,7 @@ describe('Action: callback', function() {
         });
     });
 
-    it('ItShould error with unknownCommand for invalid command', function(done) {
+    it('should error with unknownCommand for invalid command', function(done) {
         api.tasks.enqueue = function(task, params, queue, callback) {
             ItShould(task).equal("command/notFound");
             callback();
@@ -111,7 +111,7 @@ describe('Action: callback', function() {
         });
     });
 
-    it('ItShould error with unknownCommand for command not in DB', function(done) {
+    it('should error with unknownCommand for command not in DB', function(done) {
         api.tasks.enqueue = function(task, params, queue, callback) {
             ItShould(task).equal("command/notFound");
             callback();
@@ -122,6 +122,32 @@ describe('Action: callback', function() {
             group_id: "13800367",
             user_id: 12345,
             text: '!giphy'
+        }, function(response, connection) {
+            done();
+        });
+    });
+
+    it('should error with restricted when accessing command with access control', function(done) {
+        api.tasks.enqueue = function(task, params, queue, callback) {
+            ItShould(task).equal("command/error");
+            ItShould(params.errType).equal("restricted");
+            callback();
+        };
+        api.database.updateOne('groupmeGroups', {
+            groupId: "13800367"
+        }, {
+            "$set": {
+                'accessControl': {
+                    '55f33ca470dae75f9df5f5ce': []
+                }
+            }
+        });
+
+        api.specHelper.runAction('callback', {
+            communityId: "55f2009570dae75f9df5f5cc",
+            group_id: "13800367",
+            user_id: 12345,
+            text: '!ping'
         }, function(response, connection) {
             done();
         });

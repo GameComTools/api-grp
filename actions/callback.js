@@ -48,42 +48,49 @@ exports.callback =  {
                                 if (groupmeGroup[0].botEnabled) {
                                     if (groupmeCommand[0]) {
                                         if (
-                                            !groupmeGroup[0].cooldowns ||
-                                            !groupmeGroup[0].cooldowns[groupmeCommand[0]._id] ||
-                                            groupmeGroup[0].cooldowns[groupmeCommand[0]._id] <= Date.now()
+                                            groupmeGroup[0].accessControl &&
+                                            groupmeGroup[0].accessControl[groupmeCommand[0]._id] &&
+                                            groupmeGroup[0].accessControl[groupmeCommand[0]._id].indexOf(data.params.user_id) === -1
                                         ) {
-                                            data.params.db_command_id = groupmeCommand[0]._id;
-                                            data.params.db_group_id = groupmeGroup[0]._id;
-                                            data.params.args = data.params.text.split(' ');
-                                            data.params.args.shift();
-                                            var cooldown = groupmeCommand[0].cooldown;
-                                            if (cooldown === undefined) {
-                                                cooldown = 15;
-                                            }
-                                            if (groupmeGroup[0].customCooldowns && groupmeGroup[0].customCooldowns[groupmeCommand[0]._id]) {
-                                                cooldown = groupmeGroup[0].customCooldowns[groupmeCommand[0]._id];
-                                            }
-                                            var updates = {$set: {}};
-                                            updates['$set']['cooldowns.' + groupmeCommand[0]._id] = Date.now() + (cooldown * 60000);
-
-                                            api.database.updateOne('groupmeGroups', {_id: groupmeGroup[0]._id}, updates);
-                                            return api.tasks.enqueue(i, data.params, 'default', function (err, toRun) {
-                                                next(err);
-                                            });
+                                            data.params.errType = 'restricted';
                                         } else {
-                                            // This command is in cooldown mode
-                                            data.params.errType = 'cooldown';
-                                            var diffMs = (groupmeGroup[0].cooldowns[groupmeCommand[0]._id] - Date.now()); // milliseconds
-                                            var diffMins = Math.round(diffMs / 1000 / 60); // minutes
-                                            var diffSeconds = Math.round(diffMs / 1000); // seconds
+                                            if (
+                                                !groupmeGroup[0].cooldowns || !groupmeGroup[0].cooldowns[groupmeCommand[0]._id] ||
+                                                groupmeGroup[0].cooldowns[groupmeCommand[0]._id] <= Date.now()
+                                            ) {
+                                                data.params.db_command_id = groupmeCommand[0]._id;
+                                                data.params.db_group_id = groupmeGroup[0]._id;
+                                                data.params.args = data.params.text.split(' ');
+                                                data.params.args.shift();
+                                                var cooldown = groupmeCommand[0].cooldown;
+                                                if (cooldown === undefined) {
+                                                    cooldown = 15;
+                                                }
+                                                if (groupmeGroup[0].customCooldowns && groupmeGroup[0].customCooldowns[groupmeCommand[0]._id]) {
+                                                    cooldown = groupmeGroup[0].customCooldowns[groupmeCommand[0]._id];
+                                                }
+                                                var updates = {$set: {}};
+                                                updates['$set']['cooldowns.' + groupmeCommand[0]._id] = Date.now() + (cooldown * 60000);
 
-                                            var timeRemaining = 'a few minutes!';
-                                            if (diffSeconds < 60) {
-                                                timeRemaining = diffSeconds + ' second' + (diffSeconds > 1 ? 's': '') + '!';
+                                                api.database.updateOne('groupmeGroups', {_id: groupmeGroup[0]._id}, updates);
+                                                return api.tasks.enqueue(i, data.params, 'default', function (err, toRun) {
+                                                    next(err);
+                                                });
                                             } else {
-                                                timeRemaining = diffMins + ' minute' + (diffMins > 1 ? 's': '') + '!';
+                                                // This command is in cooldown mode
+                                                data.params.errType = 'cooldown';
+                                                var diffMs = (groupmeGroup[0].cooldowns[groupmeCommand[0]._id] - Date.now()); // milliseconds
+                                                var diffMins = Math.round(diffMs / 1000 / 60); // minutes
+                                                var diffSeconds = Math.round(diffMs / 1000); // seconds
+
+                                                var timeRemaining = 'a few minutes!';
+                                                if (diffSeconds < 60) {
+                                                    timeRemaining = diffSeconds + ' second' + (diffSeconds > 1 ? 's' : '') + '!';
+                                                } else {
+                                                    timeRemaining = diffMins + ' minute' + (diffMins > 1 ? 's' : '') + '!';
+                                                }
+                                                data.params.timeRemaining = timeRemaining;
                                             }
-                                            data.params.timeRemaining = timeRemaining;
                                         }
                                     } else {
                                         return api.tasks.enqueue(err, data.params, 'default', function(err, toRun){
