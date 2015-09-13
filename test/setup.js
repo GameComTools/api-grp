@@ -22,36 +22,40 @@ beforeEach(function(done) {
 
     // Reset The Mock Mongo DB
     if (global.resetMongo) {
-        global.mockDatabase = {
-            communities: [
-                {
-                    "_id": "55f2009570dae75f9df5f5cc",
-                    "name": "Kody Testing"
-                }
-            ],
-            groupmeGroups: [
-                {
-                    "_id": "55f3389370dae75f9df5f5cd",
-                    "groupId": "13800367",
-                    "botEnabled": true,
-                    "cooldowns": {
-                        "55f33ca470dae75f9df5f5ce": 0
-                    },
-                    "customCooldowns": {
-                        "55f33ca470dae75f9df5f5ce": 5
-                    }
-                }
-            ],
-            groupmeCommands: [
-                {
-                    "_id": "55f33ca470dae75f9df5f5ce",
-                    "command": "ping"
-                }
-            ]
-        };
+        global.resetMongoFun();
     }
     done();
 });
+
+global.resetMongoFun = function() {
+    global.mockDatabase = {
+        communities: [
+            {
+                "_id": "55f2009570dae75f9df5f5cc",
+                "name": "Kody Testing"
+            }
+        ],
+        groupmeGroups: [
+            {
+                "_id": "55f3389370dae75f9df5f5cd",
+                "groupId": "13800367",
+                "botEnabled": true,
+                "cooldowns": {
+                    "55f33ca470dae75f9df5f5ce": 0
+                },
+                "customCooldowns": {
+                    "55f33ca470dae75f9df5f5ce": 5
+                }
+            }
+        ],
+        groupmeCommands: [
+            {
+                "_id": "55f33ca470dae75f9df5f5ce",
+                "command": "ping"
+            }
+        ]
+    };
+};
 
 before(function(done) {
     actionhero.start(function(err, a) {

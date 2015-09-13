@@ -1,6 +1,7 @@
 describe('Task: warList', function() {
 
     before(function() {
+        global.resetMongoFun();
         global.resetMongo = false;
         global.lastParent = this.test.parent.title;
         global.mockDatabase.groupmeCommands.command = 'warlist';

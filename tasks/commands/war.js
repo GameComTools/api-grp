@@ -20,7 +20,7 @@ exports.commandWar = {
                             opponent: '',
                             calloutMax: 0,
                             callouts: [],
-                            warExipres: null,
+                            warExipres: Date.now() + 60000,
                             calloutExpires: null
                         }
                     }
@@ -46,7 +46,7 @@ exports.commandWar = {
                     api.database.updateOne('groupmeGroups', {groupId: params.group_id}, {
                         $set: {
                             'warData.calloutMax': parseInt(params.args[0]),
-                            'warData.warExpires': Date.now() + ((60000 * 60) * 48),
+                            'warData.warExipres': Date.now() + ((60000 * 60) * 48),
                             'warData.calloutExpires': Date.now() + ((60000 * 60) * 24)
                         }
                     });

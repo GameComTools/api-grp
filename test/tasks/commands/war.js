@@ -1,6 +1,7 @@
 describe('Task: war', function() {
 
     before(function() {
+        global.resetMongoFun();
         global.resetMongo = false;
         global.lastParent = this.test.parent.title;
         global.mockDatabase.groupmeCommands.command = 'war';
@@ -20,11 +21,10 @@ describe('Task: war', function() {
             args: []
         }, function (response) {
             api.database.find('groupmeGroups', {groupId: '13800367'}).then(function(group) {
-                ItShould(group[0].warData).deepEqual({
+                ItShould(group[0].warData).containEql({
                     opponent: '',
                     calloutMax: 0,
                     callouts: [],
-                    warExipres: null,
                     calloutExpires: null
                 });
                 done();
@@ -87,7 +87,7 @@ describe('Task: war', function() {
         }, function (response) {
             api.database.find('groupmeGroups', {groupId: '13800367'}).then(function(group) {
                 ItShould(group[0].warData.calloutMax).equal(12);
-                ItShould(group[0].warData.warExpires).approximately(Date.now() + ((60000 * 60) * 48), 5);
+                ItShould(group[0].warData.warExipres).approximately(Date.now() + ((60000 * 60) * 48), 5);
                 ItShould(group[0].warData.calloutExpires).approximately(Date.now() + ((60000 * 60) * 24), 5);
                 done();
             });
@@ -119,7 +119,7 @@ describe('Task: war', function() {
             groupId: "13800367"
         }, {
             "$set": {
-                'warData.warExpires': Date.now() - 100
+                'warData.warExipres': Date.now() - 100
             }
         });
 
