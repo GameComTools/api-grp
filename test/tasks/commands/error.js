@@ -1,11 +1,10 @@
-describe('Task: notFound', function() {
-    it('responds with expected text', function (done) {
+describe('Task: error', function() {
+    it('responds', function (done) {
         api.groupme = function(endpoint, method, data, all) {
-            ItShould(data.message.text).startWith('Unknown Command');
             done();
         };
 
-        api.specHelper.runTask('command/notFound', {
+        api.specHelper.runTask('command/error', {
             communityId: "55f2009570dae75f9df5f5cc",
             group_id: "13800367",
             user_id: 12345,

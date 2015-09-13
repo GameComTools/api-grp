@@ -87,8 +87,8 @@ describe('Task: war', function() {
         }, function (response) {
             api.database.find('groupmeGroups', {groupId: '13800367'}).then(function(group) {
                 ItShould(group[0].warData.calloutMax).equal(12);
-                ItShould(group[0].warData.warExpires).equal(Date.now() + ((60000 * 60) * 48));
-                ItShould(group[0].warData.calloutExpires).equal(Date.now() + ((60000 * 60) * 24));
+                ItShould(group[0].warData.warExpires).approximately(Date.now() + ((60000 * 60) * 48), 5);
+                ItShould(group[0].warData.calloutExpires).approximately(Date.now() + ((60000 * 60) * 24), 5);
                 done();
             });
         });

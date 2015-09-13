@@ -10,7 +10,7 @@ exports.commandGiphy = {
             tag: params.args[0],
             rating: 'pg-13'
         }, function(err, img) {
-            if (err === null) {
+            if (err === null && img.data) {
                 api.groupme('groups/' + params.group_id + '/messages', 'POST', {
                     "message": {
                         "text": img.data.image_url
