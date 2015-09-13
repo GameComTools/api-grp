@@ -1,5 +1,5 @@
 exports.commandWarList = {
-    name: "command/warList",
+    name: "command/warlist",
     description: "WarList command",
     queue: "default",
     frequency: 0,
