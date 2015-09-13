@@ -119,9 +119,7 @@ describe('Task: war', function() {
             groupId: "13800367"
         }, {
             "$set": {
-                warData: {
-                    'warExpires': Date.now() - 100
-                }
+                'warData.warExpires': Date.now() - 100
             }
         });
 

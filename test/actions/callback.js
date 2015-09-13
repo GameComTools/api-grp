@@ -39,11 +39,9 @@ describe('Action: callback', function() {
             groupId: "13800367"
         }, {
             "$set": {
-                cooldowns: {
-                    '55f33ca470dae75f9df5f5ce': Date.now() + 60000
-                }
+                'cooldowns.55f33ca470dae75f9df5f5ce': Date.now() + 60000
             }
-        })
+        });
 
         api.specHelper.runAction('callback', {
             communityId: "55f2009570dae75f9df5f5cc",
@@ -66,9 +64,7 @@ describe('Action: callback', function() {
             groupId: "13800367"
         }, {
             "$set": {
-                cooldowns: {
-                    '55f33ca470dae75f9df5f5ce': Date.now() + 30000
-                }
+                'cooldowns.55f33ca470dae75f9df5f5ce': Date.now() + 30000
             }
         });
 

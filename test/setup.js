@@ -91,7 +91,24 @@ before(function(done) {
                         }
                         if (found) {
                             if (updates['$set']) {
-                                col[index] = merge(row, updates['$set']);
+                                for (var i in updates['$set']) {
+                                    if (i.indexOf('.') > -1) {
+                                        function idxSet(obj,is, value) {
+                                            if (typeof is == 'string')
+                                                return idxSet(obj,is.split('.'), value);
+                                            else if (is.length==1 && value!==undefined)
+                                                return obj[is[0]] = value;
+                                            else if (is.length==0)
+                                                return obj;
+                                            else
+                                                return idxSet(obj[is[0]],is.slice(1), value);
+                                        }
+
+                                        idxSet(col[index], i, updates['$set'][i]);
+                                        delete updates['$set'][i];
+                                    }
+                                }
+                                col[index] = merge(col[index], updates['$set']);
                             } else {
                                 row = updates;
                             }

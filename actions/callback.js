@@ -56,7 +56,6 @@ exports.callback =  {
                                             data.params.db_group_id = groupmeGroup[0]._id;
                                             data.params.args = data.params.text.split(' ');
                                             data.params.args.shift();
-                                            var updates = {cooldowns: {}};
                                             var cooldown = groupmeCommand[0].cooldown;
                                             if (cooldown === undefined) {
                                                 cooldown = 15;
@@ -64,8 +63,8 @@ exports.callback =  {
                                             if (groupmeGroup[0].customCooldowns && groupmeGroup[0].customCooldowns[groupmeCommand[0]._id]) {
                                                 cooldown = groupmeGroup[0].customCooldowns[groupmeCommand[0]._id];
                                             }
-                                            updates.cooldowns[groupmeCommand[0]._id] = Date.now() + (cooldown * 60000);
-                                            updates = {$set: updates};
+                                            var updates = {$set: {}};
+                                            updates['$set']['cooldowns.' + groupmeCommand[0]._id] = Date.now() + (cooldown * 60000);
 
                                             api.database.updateOne('groupmeGroups', {_id: groupmeGroup[0]._id}, updates);
                                             return api.tasks.enqueue(i, data.params, 'default', function (err, toRun) {
