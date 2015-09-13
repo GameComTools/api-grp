@@ -8,7 +8,7 @@ exports.commandWar = {
         api.database.find('groupmeGroups', {groupId: params.group_id}).then(function(groups) {
             var group = groups[0];
 
-            if (!group.warData || Date.now() >= group.warData.warExpires) {
+            if (!group.warData || Date.now() >= group.warData.warExipres) {
                 api.groupme('groups/' + params.group_id + '/messages', 'POST', {
                     "message": {
                         "text": 'Who will this war be against? (Respond !war {opponentName})'
