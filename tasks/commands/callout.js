@@ -8,7 +8,7 @@ exports.commandCallout = {
         api.database.find('groupmeGroups', {groupId: params.group_id}).then(function(groups) {
             var group = groups[0];
 
-            if (!group.warData || Date.now() >= group.warData.warExpires) {
+            if (!group.warData || Date.now() >= group.warData.warExipres) {
                 api.groupme('groups/' + params.group_id + '/messages', 'POST', {
                     "message": {
                         "text": 'A war has not been started. Please contact your leader.'
@@ -47,7 +47,6 @@ exports.commandCallout = {
                         obj['$set']['warData.callouts.' + index] = {};
                     }
                 });
-                console.log(obj);
                 api.database.updateOne('groupmeGroups', {groupId: params.group_id}, obj);
 
                 api.groupme('groups/' + params.group_id + '/messages', 'POST', {
