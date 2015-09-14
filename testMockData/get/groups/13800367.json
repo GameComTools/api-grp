@@ -1,0 +1,57 @@
+{
+  "response": {
+    "id": "13800367",
+    "group_id": "13800367",
+    "name": "GCT Test Lab",
+    "phone_number": "+1 8188616977",
+    "type": "private",
+    "description": "Just some testing...",
+    "image_url": null,
+    "creator_user_id": "24997941",
+    "created_at": 1430685763,
+    "updated_at": 1442256434,
+    "office_mode": false,
+    "share_url": null,
+    "members": [
+      {
+        "user_id": "24997941",
+        "nickname": "Kody",
+        "image_url": "http://i.groupme.com/1024x576.jpeg.0563e66d24194fc486b9413bfbf3bd08",
+        "id": "86106955",
+        "muted": true,
+        "autokicked": false
+      },
+      {
+        "user_id": "25048730",
+        "nickname": "Spot Spotterson",
+        "image_url": "http://i.groupme.com/801x826.jpeg.a1981f1dbbc74f2984a694981b621166",
+        "id": "86106977",
+        "muted": false,
+        "autokicked": false
+      },
+      {
+        "user_id": "26724659",
+        "nickname": "Kody's Test Community Bot",
+        "image_url": null,
+        "id": "86108329",
+        "muted": false,
+        "autokicked": false
+      }
+    ],
+    "messages": {
+      "count": 1986,
+      "last_message_id": "144225643461435330",
+      "last_message_created_at": 1442256434,
+      "preview": {
+        "nickname": "Kody",
+        "text": "hmm",
+        "image_url": "http://i.groupme.com/1024x576.jpeg.0563e66d24194fc486b9413bfbf3bd08",
+        "attachments": []
+      }
+    },
+    "max_members": 200
+  },
+  "meta": {
+    "code": 200
+  }
+}

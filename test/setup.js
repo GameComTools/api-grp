@@ -18,7 +18,7 @@ beforeEach(function(done) {
     };
     api.groupme = function(endpoint, method, data, all) {
         api.log('MOCK: SENT GROUPME MESSAGE', 'alert');
-        global.getGroupMeMockData(endpoint, method);
+        return global.getGroupMeMockData(endpoint, method);
     };
 
     // Reset The Mock Mongo DB
@@ -29,13 +29,17 @@ beforeEach(function(done) {
 });
 
 global.getGroupMeMockData = function(endpoint, method) {
-    var fs = require('fs');
-    var fPath = __dirname + '/../testMockData/' + method.toLowerCase() + '/' + endpoint.toLowerCase() + '.json';
-    if (fs.existsSync(fPath)) {
-        return require(fPath);
-    } else {
-        return {};
-    }
+    return new Promise(function(resolve, reject) {
+        var fs = require('fs');
+        var fPath = __dirname + '/../testMockData/' + method.toLowerCase() + '/' + endpoint.toLowerCase() + '.json';
+        if (fs.existsSync(fPath)) {
+            console.log(typeof require(fPath));
+            return resolve(require(fPath));
+        } else {
+            api.log('No Mock Data For ' + endpoint + '(' + method + ')', 'alert');
+            return resolve({});
+        }
+    });
 };
 
 global.resetMongoFun = function() {
