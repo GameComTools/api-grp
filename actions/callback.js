@@ -131,6 +131,10 @@ exports.callback =  {
                                         "text": "☃"
                                     }
                                 };
+                                var cooldown = communities[0].groupMeTextTriggers[i].customCooldown;
+                                if (cooldown === undefined) {
+                                    cooldown = 5;
+                                }
                                 if (communities[0].groupMeTextTriggers[i].text) {
                                     obj.message.text = communities[0].groupMeTextTriggers[i].text
                                 } else {
@@ -141,10 +145,6 @@ exports.callback =  {
                                     ];
                                 }
                                 var updates = {$set: {}};
-                                var cooldown = communities[0].groupMeTextTriggers[i].customCooldown;
-                                if (cooldown === undefined) {
-                                    cooldown = 5;
-                                }
                                 updates['$set']['groupMeTextTriggers.' + i + '.cooldown'] = Date.now() + (cooldown * 60000);
                                 api.database.updateOne('communities', {_id: communities[0]._id}, updates);
 
