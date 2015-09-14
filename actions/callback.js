@@ -135,6 +135,7 @@ exports.callback =  {
                                     obj.message.text = communities[0].groupMeTextTriggers[i].text
                                 } else {
                                     delete communities[0].groupMeTextTriggers[i].cooldown;
+                                    delete communities[0].groupMeTextTriggers[i].customCooldown;
                                     obj.message.attachments = [
                                         communities[0].groupMeTextTriggers[i]
                                     ];
