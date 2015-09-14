@@ -165,7 +165,6 @@ describe('Action: callback', function() {
             user_id: 12345,
             text: 'awood is a homo'
         }, function(response, connection) {
-            done();
         });
     });
 });
