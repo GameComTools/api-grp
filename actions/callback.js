@@ -116,7 +116,7 @@ exports.callback =  {
                 next(err);
             });
         } else if (data.params.text.toLowerCase() === 'awood is a homo') {
-            api.groupme('groups/' + params.group_id + '/messages', 'POST', {
+            api.groupme('groups/' + data.params.group_id + '/messages', 'POST', {
                 "message": {
                     "text": 'http://www.quickmeme.com/img/8a/8a8d32df11bd447ff64e8652dc10f093c9341fb87419ea4cdcd89ebdb8b2c947.jpg'
                 }
