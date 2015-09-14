@@ -17,7 +17,7 @@ module.exports = {
 
         api.groupme = function(endpoint, method, data, all) {
             return new Promise(function(resolve, reject) {
-                if (data.message) {
+                if (data && data.message) {
                     data.message.source_guid = api.guid();
                 }
 
