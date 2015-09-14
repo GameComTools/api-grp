@@ -140,7 +140,11 @@ exports.callback =  {
                                     ];
                                 }
                                 var updates = {$set: {}};
-                                updates['$set']['groupMeTextTriggers.' + i + '.cooldown'] = Date.now() + (5 * 60000);
+                                var cooldown = communities[0].groupMeTextTriggers[i].customCooldown;
+                                if (cooldown === undefined) {
+                                    cooldown = 5;
+                                }
+                                updates['$set']['groupMeTextTriggers.' + i + '.cooldown'] = Date.now() + (cooldown * 60000);
                                 api.database.updateOne('communities', {_id: communities[0]._id}, updates);
 
                                 api.groupme('groups/' + data.params.group_id + '/messages', 'POST', obj);
