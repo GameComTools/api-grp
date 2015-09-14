@@ -10,4 +10,5 @@ addons:
     - sshpass
 after_success:
   - sshpass -e scp -o StrictHostKeyChecking=no -r ./ root@45.55.208.46:/srv/api-grp
-  - sshpass -e ssh root@45.55.208.46  -o StrictHostKeyChecking=no "kill $(ps aux | grep '[n]ode /srv/api-grp/node_modules/actionhero/bin/actionhero' | awk '{print $2}')"
+#  - sshpass -e ssh root@45.55.208.46  -o StrictHostKeyChecking=no "kill $(ps aux | grep '[n]ode /srv/api-grp/node_modules/actionhero/bin/actionhero' | awk '{print $2}')"
+  - sshpass -e ssh root@45.55.208.46  -o StrictHostKeyChecking=no "pm2 stop -f /srv/api-grp/scripts/pm2.json;pm2 start /srv/api-grp/scripts/pm2.json"
