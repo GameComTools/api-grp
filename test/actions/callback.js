@@ -152,4 +152,20 @@ describe('Action: callback', function() {
             done();
         });
     });
+
+    it('should respond when awood test is used', function (done) {
+        api.groupme = function(endpoint, method, data, all) {
+            ItShould(data.message.text).startWith('http://');
+            done();
+        };
+
+        api.specHelper.runAction('callback', {
+            communityId: "55f2009570dae75f9df5f5cc",
+            group_id: "13800367",
+            user_id: 12345,
+            text: 'awood is a homo'
+        }, function(response, connection) {
+            done();
+        });
+    });
 });
