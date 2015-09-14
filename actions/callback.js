@@ -115,14 +115,40 @@ exports.callback =  {
             return api.tasks.enqueue(err, data.params, 'default', function(err, toRun){
                 next(err);
             });
-        } else if (data.params.text.toLowerCase() === 'awood is a homo') {
-            api.groupme('groups/' + data.params.group_id + '/messages', 'POST', {
-                "message": {
-                    "text": 'http://www.quickmeme.com/img/8a/8a8d32df11bd447ff64e8652dc10f093c9341fb87419ea4cdcd89ebdb8b2c947.jpg'
+        } else {
+            api.database.find('communities', {
+                _id: data.params.communityId
+            }).then(function(communities) {
+                if (communities[0] && communities[0].groupMeTextTriggers) {
+                    for (var i in communities[0].groupMeTextTriggers) {
+                        if (data.params.text.toLowerCase().indexOf(i) > -1) {
+                            if (
+                                !communities[0].groupMeTextTriggers[i].cooldown ||
+                                communities[0].groupMeTextTriggers[i].cooldown <= Date.now()
+                            ) {
+                                var obj = {
+                                    "message": {
+                                        "text": "☃"
+                                    }
+                                };
+                                if (communities[0].groupMeTextTriggers[i].text) {
+                                    obj.message.text = communities[0].groupMeTextTriggers[i].text
+                                } else {
+                                    obj.attachments = [
+                                        communities[0].groupMeTextTriggers[i]
+                                    ];
+                                }
+                                var updates = {$set: {}};
+                                updates['$set']['groupMeTextTriggers.' + i + '.cooldown'] = Date.now() + (5 * 60000);
+                                api.database.updateOne('communities', {_id: communities[0]._id}, updates);
+
+                                api.groupme('groups/' + data.params.group_id + '/messages', 'POST', obj);
+                                return next();
+                            }
+                        }
+                    }
                 }
             });
-            next();
-        } else {
             next();
         }
     }

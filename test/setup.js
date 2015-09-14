@@ -43,7 +43,12 @@ global.resetMongoFun = function() {
         communities: [
             {
                 "_id": "55f2009570dae75f9df5f5cc",
-                "name": "Kody Testing"
+                "name": "Kody Testing",
+                "groupMeTextTriggers": {
+                    "awood is a homo" : {
+                        "text" : "http://www.quickmeme.com/img/8a/8a8d32df11bd447ff64e8652dc10f093c9341fb87419ea4cdcd89ebdb8b2c947.jpg"
+                    }
+                }
             }
         ],
         groupmeGroups: [
