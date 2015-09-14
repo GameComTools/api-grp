@@ -134,7 +134,8 @@ exports.callback =  {
                                 if (communities[0].groupMeTextTriggers[i].text) {
                                     obj.message.text = communities[0].groupMeTextTriggers[i].text
                                 } else {
-                                    obj.attachments = [
+                                    delete communities[0].groupMeTextTriggers[i].cooldown;
+                                    obj.message.attachments = [
                                         communities[0].groupMeTextTriggers[i]
                                     ];
                                 }
