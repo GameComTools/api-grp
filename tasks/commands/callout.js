@@ -42,6 +42,16 @@ exports.commandCallout = {
                     name: params.name,
                     user_id: params.user_id
                 };
+                var message = params.name + ' has called ' + params.args[0];
+                var timeLeft = group.warData.warExipres - Date.now();
+                if (group.warData.threeHourExpirations && timeLeft <= 72000000) {
+                    // Run in 3 hours
+                    api.tasks.enqueueAt(10800000, "calloutClear", {group: params.group_id, index: (parseInt(params.args[0])-1)}, 'default', function(err, toRun){});
+                    var moment = require('moment');
+                    var expires = moment().add(3, 'hours').format('H:mm A');
+                    message += ' (Expires At: ' + moment().add(3, 'hours').format('H:mm A') + ' EST)';
+                    obj['$set']['warData.callouts.' + (parseInt(params.args[0])-1)].expires = expires;
+                }
                 group.warData.callouts.forEach(function(item, index) {
                     if (item && item.user_id === params.user_id) {
                         obj['$set']['warData.callouts.' + index] = {};
@@ -51,7 +61,7 @@ exports.commandCallout = {
 
                 api.groupme('groups/' + params.group_id + '/messages', 'POST', {
                     "message": {
-                        "text": params.name + ' has called ' + params.args[0]
+                        "text": message
                     }
                 });
             }

@@ -12,6 +12,7 @@
     "deepmerge": "^0.2.10",
     "giphy": "0.0.4",
     "grunt": "latest",
+    "moment": "^2.10.6",
     "mongodb": "^2.0.42",
     "request": "^2.61.0",
     "ws": "latest"

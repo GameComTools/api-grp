@@ -18,7 +18,11 @@ exports.commandWarList = {
                 var message = 'Here are the callouts for the current war:\n\n';
                 var c = 0;
                 while (c < group.warData.calloutMax) {
-                    message += '    Enemy ' + (c+1) + ': ' + (group.warData.callouts[c] ? group.warData.callouts[c].name || '' : '') + '\n';
+                    message += '    Enemy ' + (c+1) + ': ' + (group.warData.callouts[c] ? group.warData.callouts[c].name || '' : '');
+                    if (group.warData.callouts[c] && group.warData.callouts[c].expires) {
+                        message += ' (Expires:  ' + group.warData.callouts[c].expires + ' EST)';
+                    }
+                    message += '\n';
                     c++;
                 }
                 message += '\n';

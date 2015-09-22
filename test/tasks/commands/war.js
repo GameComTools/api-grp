@@ -72,7 +72,7 @@ describe('Task: war', function() {
         });
     });
 
-    it('stores the max callout count and has correct expiries', function (done) {
+    it('stores the max callout count', function (done) {
         api.specHelper.runTask('command/war', {
             communityId: "55f2009570dae75f9df5f5cc",
             group_id: "13800367",
@@ -87,6 +87,26 @@ describe('Task: war', function() {
         }, function (response) {
             api.database.find('groupmeGroups', {groupId: '13800367'}).then(function(group) {
                 ItShould(group[0].warData.calloutMax).equal(12);
+                done();
+            });
+        });
+    });
+
+    it('stores the answer to 3 hour expirations and has correct expiries', function (done) {
+        api.specHelper.runTask('command/war', {
+            communityId: "55f2009570dae75f9df5f5cc",
+            group_id: "13800367",
+            user_id: 12345,
+            text: '!war yes',
+            action: 'callback',
+            apiVersion: 1,
+            cmdErr: 'NO_FOUND',
+            db_command_id:  '55f33ca470dae75f9df5f5ce',
+            db_group_id: '55f3389370dae75f9df5f5cd',
+            args: ['yes']
+        }, function (response) {
+            api.database.find('groupmeGroups', {groupId: '13800367'}).then(function(group) {
+                ItShould(group[0].warData.threeHourExpirations).equal(true);
                 ItShould(group[0].warData.warExipres).approximately(Date.now() + ((60000 * 60) * 48), 5);
                 ItShould(group[0].warData.calloutExpires).approximately(Date.now() + ((60000 * 60) * 24), 5);
                 done();
