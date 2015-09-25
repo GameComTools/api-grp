@@ -75,7 +75,7 @@ exports.commandWar = {
                     // War actually begins 24 hour mark
                     api.tasks.enqueueAt(Date.now() + ((60000 * 60) * 24), "sendMessage", {
                         group: params.group_id,
-                        message: message + 'Good luck!'
+                        message: message + ' Good luck!'
                     }, 'default', function(err, toRun){});
                     var obj = {
                         $set: {
