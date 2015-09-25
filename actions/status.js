@@ -36,14 +36,18 @@ exports.status = {
   run: function(api, data, next){
     api.stats.getAll(function(err, stats){
       api.tasks.details(function(err, details){
-        data.response.id                = api.id;
-        data.response.actionheroVersion = api.actionheroVersion;
-        data.response.uptime            = new Date().getTime() - api.bootTime;
-        data.response.stats             = stats;
-        data.response.queues            = details.queues;
-        data.response.workers           = details.workers;
-        
-        next(err);
+        api.tasks.allDelayed(function(err, delayedDetails) {
+          data.response.id = api.id;
+          data.response.actionheroVersion = api.actionheroVersion;
+          data.response.uptime = new Date().getTime() - api.bootTime;
+          data.response.stats = stats;
+          data.response.queues = details.queues;
+          data.response.delayedJobs = delayedDetails;
+          data.response.queues = details.queues;
+          data.response.workers = details.workers;
+
+          next(err);
+        });
       });
     });
   }
