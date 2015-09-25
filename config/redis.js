@@ -12,9 +12,9 @@ exports.default = {
       rpcTimeout: 5000, 
       // which redis package should you ise?
       package: 'fakeredis'
-    }
+    };
 
-    if( process.env.FAKEREDIS === 'false' || process.env.REDIS_HOST !== undefined ){
+    //if( process.env.FAKEREDIS === 'false' || process.env.REDIS_HOST !== undefined ){
       // You can opt to use a real redis DB
       // This is required for multi-server deployments
 
@@ -33,11 +33,11 @@ exports.default = {
       //   master_auth_pass: null,
       //   masterName: 'BUS',
       // };
-    }
+    //}
 
     return redisDetails;
   }
-}
+};
 
 exports.test = { 
   redis: function(api){
@@ -55,4 +55,4 @@ exports.test = {
       'database': 2
     }
   }
-}
+};
