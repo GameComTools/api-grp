@@ -16,13 +16,20 @@ exports.commandError = {
             giphy: 'Giphy seems to be experiencing an issue at this time. Please try again in a few moments.',
             notRegistered: 'This group is not configured properly. Please contact support.',
             cooldown: 'That command was just used. Try again in ' + params.timeRemaining,
-            restricted: 'You are not allowed to access that command. Please contact your leader.'
+            restricted: 'That command is restricted. If you believe this is an error, please contact your group leader.'
         };
         api.groupme('groups/' + params.group_id + '/messages', 'POST', {
             "message": {
-                "text": (errorText[params.errType || 'def'] || errorText.def) + ' (ERR-ID: ' + errId + ')'
+                "text": (errorText[params.errType || 'def'] || errorText.def) + errorId()
             }
         });
         next();
+
+        function errorId() {
+            if (params.errType !== 'restricted' && params.errType.cooldown) {
+                return ' (ERR-ID: ' + errId + ')';
+            }
+            return '';
+        }
     }
 };
