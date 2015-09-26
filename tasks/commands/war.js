@@ -70,11 +70,11 @@ exports.commandWar = {
                     if (answer) {
                         message += ' In 4 hours callouts will be cleared and available to be called again. Calls made after this time will expire after 3 hours from when they were made and will be available to be called again.';
                         // Callouts clear 20 hour mark
-                        api.tasks.enqueueAt(Date.now() + ((60000 * 60) * 28), "clearAllCallouts", {group: params.group_id}, 'default', function (err, toRun) {});
+                        api.tasks.enqueueAt(Date.now() + ((60000 * 60) * 28), "clearAllCallouts", {group_id: params.group_id}, 'default', function (err, toRun) {});
                     }
                     // War actually begins 24 hour mark
                     api.tasks.enqueueAt(Date.now() + ((60000 * 60) * 24), "sendMessage", {
-                        group: params.group_id,
+                        group_id: params.group_id,
                         message: message + ' Good luck!'
                     }, 'default', function(err, toRun){});
                     var obj = {
