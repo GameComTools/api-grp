@@ -2,7 +2,7 @@ exports.default = {
   tasks: function(api){
     return {
       // Should this node run a scheduler to promote delayed tasks?
-      scheduler: false,
+      scheduler: true,
       // what queues should the taskProcessors work?
       queues: ['*'],
       // Verbosity of task logging
