@@ -46,7 +46,7 @@ exports.commandCallout = {
                 var timeLeft = group.warData.warExipres - Date.now();
                 if (group.warData.threeHourExpirations && timeLeft <= 72000000) {
                     // Run in 3 hours
-                    api.tasks.enqueueAt(10800000, "calloutClear", {group: params.group_id, index: (parseInt(params.args[0])-1)}, 'default', function(err, toRun){});
+                    api.tasks.enqueueAt(10800000, "calloutClear", {group_id: params.group_id, index: (parseInt(params.args[0])-1)}, 'default', function(err, toRun){});
                     var moment = require('moment');
                     var expires = moment().add(3, 'hours').format('H:mm A');
                     message += ' (Expires At: ' + moment().add(3, 'hours').format('H:mm A') + ' EST)';
