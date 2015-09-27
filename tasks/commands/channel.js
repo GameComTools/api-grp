@@ -33,7 +33,7 @@ exports.commandChannel = {
                 message += '@' + member.nickname;
 
                 attachments[0].loci.push([start, ('@' + member.nickname).length]);
-                attachments[0].user_ids.push(member.id);
+                attachments[0].user_ids.push(parseInt(member.id));
             });
             if (message !== '') {
                 sendMessage();
