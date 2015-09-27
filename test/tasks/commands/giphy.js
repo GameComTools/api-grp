@@ -14,7 +14,7 @@ describe('Task: giphy', function() {
             cmdErr: 'NO_FOUND',
             db_command_id: '55f33ca470dae75f9df5f5ce',
             db_group_id: '55f3389370dae75f9df5f5cd',
-            args: []
+            args: ['test']
         }, function (response) {
 
         });

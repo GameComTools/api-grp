@@ -6,30 +6,71 @@ exports.commandGiphy = {
 
     run: function(api, params, next) {
         var giphy = require('giphy')(api.config.giphy.apiKey);
-        giphy.random({
-            tag: params.args[0],
-            rating: 'pg-13'
+        var query = params.args.join('+');
+        giphy.search({
+            q: query,
+            limit: 0,
+            offset: 0
         }, function(err, img) {
             if (err === null && img.data) {
-                api.groupme('groups/' + params.group_id + '/messages', 'POST', {
-                    "message": {
-                        "text": img.data.image_url
+                giphy.search({
+                    q: query,
+                    limit: Math.floor(Math.random() * img.pagination.total_count),
+                    offset: 0
+                }, function(err, img) {
+                    if (err === null && img.data && img.data[0]) {
+                        api.groupme('groups/' + params.group_id + '/messages', 'POST', {
+                            "message": {
+                                "text": img.data[0].images.original.url
+                            }
+                        });
+                        next();
+                    } else {
+                        handleError(err);
                     }
                 });
-                next();
             } else {
-                var updates = {cooldowns: {}};
-                updates.cooldowns[params.db_command_id] = Date.now() + 30000;
-                updates = {$set: updates};
-                api.database.updateOne('groupmeGroups', {_id: params.db_group_id}, updates);
-
-                params.module = 'task/command/giphy';
-                params.err = err;
-                params.errType = 'giphy';
-                api.tasks.enqueue('command/error', params, 'default', function(err, toRun){
-                    next(err);
-                });
+                handleError(err);
             }
         });
+
+        function handleError(err) {
+            var updates = {cooldowns: {}};
+            updates.cooldowns[params.db_command_id] = Date.now() + 30000;
+            updates = {$set: updates};
+            api.database.updateOne('groupmeGroups', {_id: params.db_group_id}, updates);
+
+            params.module = 'task/command/giphy';
+            params.err = err;
+            params.errType = 'giphy';
+            api.tasks.enqueue('command/error', params, 'default', function(err, toRun){
+                next(err);
+            });
+        }
+        //giphy.random({
+        //    tag: params.args.join('+'),
+        //    rating: 'pg-13'
+        //}, function(err, img) {
+        //    if (err === null && img.data) {
+        //        api.groupme('groups/' + params.group_id + '/messages', 'POST', {
+        //            "message": {
+        //                "text": img.data.image_url
+        //            }
+        //        });
+        //        next();
+        //    } else {
+        //        var updates = {cooldowns: {}};
+        //        updates.cooldowns[params.db_command_id] = Date.now() + 30000;
+        //        updates = {$set: updates};
+        //        api.database.updateOne('groupmeGroups', {_id: params.db_group_id}, updates);
+        //
+        //        params.module = 'task/command/giphy';
+        //        params.err = err;
+        //        params.errType = 'giphy';
+        //        api.tasks.enqueue('command/error', params, 'default', function(err, toRun){
+        //            next(err);
+        //        });
+        //    }
+        //});
     }
 };
