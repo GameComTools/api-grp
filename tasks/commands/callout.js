@@ -17,7 +17,7 @@ exports.commandCallout = {
             } else if (Date.now() >= group.warData.calloutExpires && !group.warData.threeHourExpirations) {
                 api.groupme('groups/' + params.group_id + '/messages', 'POST', {
                     "message": {
-                        "text": 'Callouts are closed for this war. To see the callotus use !warList'
+                        "text": 'Callouts are closed for this war. To see the callouts use !warList'
                     }
                 });
             } else if (!parseInt(params.args[0]) || parseInt(params.args[0]) > group.warData.calloutMax) {
@@ -46,10 +46,10 @@ exports.commandCallout = {
                 var timeLeft = group.warData.warExipres - Date.now();
                 if (group.warData.threeHourExpirations && timeLeft <= 72000000) {
                     // Run in 3 hours
-                    api.tasks.enqueueAt(10800000, "calloutClear", {group_id: params.group_id, index: (parseInt(params.args[0])-1)}, 'default', function(err, toRun){});
+                    api.tasks.enqueueAt(Date.now() + 10800000, "calloutClear", {group_id: params.group_id, idx: (parseInt(params.args[0])-1)}, 'default', function(err, toRun){});
                     var moment = require('moment');
-                    var expires = moment().add(3, 'hours').format('H:mm A');
-                    message += ' (Expires At: ' + moment().add(3, 'hours').format('H:mm A') + ' EST)';
+                    var expires = moment().add(3, 'hours').format('h:mm A');
+                    message += ' (Expires At: ' + expires + ' EST)';
                     obj['$set']['warData.callouts.' + (parseInt(params.args[0])-1)].expires = expires;
                 }
                 group.warData.callouts.forEach(function(item, index) {

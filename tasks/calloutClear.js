@@ -6,13 +6,14 @@ exports.commandCalloutClear = {
 
     run: function(api, params, next) {
         api.database.find('groupmeGroups', {groupId: params.group_id}).then(function(groups) {
-            var message = 'Callout for enemy ' + params.index+1 + ' has been cleared. It can now be called again.';
+            params.idx = parseInt(params.idx);
+            var message = 'Callout for enemy ' + params.idx+1 + ' has been cleared. It can now be called again.';
             var obj = {
                 $set: {
 
                 }
             };
-            obj['$set']['warData.callouts.' + params.index] = {
+            obj['$set']['warData.callouts.' + params.idx] = {
                 user_id: false
             };
             api.database.updateOne('groupmeGroups', {groupId: params.group_id}, obj);
