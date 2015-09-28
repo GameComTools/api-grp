@@ -43,7 +43,11 @@ exports.commandWarList = {
                         message += seconds + ' second' + (seconds > 1 ? 's' : '') + ' left to call an enemy. ';
                     }
                 } else {
-                    message += 'You can no longer call an enemy. '
+                    if (group.warData.threeHourExpirations) {
+                        message += 'Enemies called now will expire 3 hours after called. '
+                    } else {
+                        message += 'You can no longer call an enemy. '
+                    }
                 }
 
                 msec = (group.warData.warExipres - Date.now());
