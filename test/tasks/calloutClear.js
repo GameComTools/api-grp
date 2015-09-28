@@ -25,7 +25,7 @@ describe('Task: calloutClear', function() {
 
         api.specHelper.runTask('calloutClear', {
             group_id: "13800367",
-            index: 0
+            idx: 0
         }, function (response) {
             api.database.find('groupmeGroups', {groupId: '13800367'}).then(function(group) {
                 ItShould(group[0].warData.callouts[0].user_id).equal(false);
