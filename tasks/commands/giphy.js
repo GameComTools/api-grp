@@ -12,13 +12,13 @@ exports.commandGiphy = {
             limit: 0,
             offset: 0
         }, function(err, img) {
-            if (err === null && img.data) {
+            if (err === null && img.data && img.pagination) {
                 giphy.search({
                     q: query,
-                    limit: Math.floor(Math.random() * img.pagination.total_count),
-                    offset: 0
+                    limit: 1,
+                    offset: Math.floor(Math.random() * img.pagination.total_count)
                 }, function(err, img) {
-                    if (err === null && img.data && img.data[0]) {
+                    if (err === null && img.data && img.data[0] && img.data[0].images && img.data[0].images.original && img.data[0].images.original.url) {
                         api.groupme('groups/' + params.group_id + '/messages', 'POST', {
                             "message": {
                                 "text": img.data[0].images.original.url

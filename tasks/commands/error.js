@@ -26,7 +26,7 @@ exports.commandError = {
         next();
 
         function errorId() {
-            if (params.errType !== 'restricted' && params.errType !== 'cooldown') {
+            if (params.errType == undefined || params.errType == 'def') {
                 return ' (ERR-ID: ' + errId + ')';
             }
             return '';
