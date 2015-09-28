@@ -14,7 +14,7 @@ exports.commandCallout = {
                         "text": 'A war has not been started. Please contact your leader.'
                     }
                 });
-            } else if (Date.now() >= group.warData.calloutExpires) {
+            } else if (Date.now() >= group.warData.calloutExpires && !group.warData.threeHourExpirations) {
                 api.groupme('groups/' + params.group_id + '/messages', 'POST', {
                     "message": {
                         "text": 'Callouts are closed for this war. To see the callotus use !warList'
