@@ -18,12 +18,26 @@ exports.commandGiphy = {
                     limit: 1,
                     offset: Math.floor(Math.random() * img.pagination.total_count)
                 }, function(err, img) {
-                    if (err === null && img.data && img.data[0] && img.data[0].images && img.data[0].images.original && img.data[0].images.original.url) {
-                        api.groupme('groups/' + params.group_id + '/messages', 'POST', {
-                            "message": {
-                                "text": img.data[0].images.original.url
-                            }
-                        });
+                    console.log(img);
+                    if (err === null && img.data) {
+                        if (img.data[0] && img.data[0].images && img.data[0].images.original && img.data[0].images.original.url) {
+                            api.groupme('groups/' + params.group_id + '/messages', 'POST', {
+                                "message": {
+                                    "text": img.data[0].images.original.url
+                                }
+                            });
+                        } else {
+                            var updates = {cooldowns: {}};
+                            updates.cooldowns[params.db_command_id] = Date.now() + 30000;
+                            updates = {$set: updates};
+                            api.database.updateOne('groupmeGroups', {_id: params.db_group_id}, updates);
+
+                            api.groupme('groups/' + params.group_id + '/messages', 'POST', {
+                                "message": {
+                                    "text": "Giphy did not return any results :( - Please try another search term"
+                                }
+                            });
+                        }
                         next();
                     } else {
                         handleError(err);
